@@ -1,0 +1,31 @@
+	import requests
+from bs4 import BeautifulSoup
+import numpy as np
+
+# Hi-Lo counting system
+def hi_lo_count(card):
+    if card in [2, 3, 4, 5, 6]:
+        return 1
+    elif card in [10, 'J', 'Q', 'K', 'A']:
+        return -1
+    else:
+        return 0
+
+# Perfect strategy
+def perfect_strategy(player_hand, dealer_upcard, count):
+    # Create a decision matrix for the optimal move based on the game state and current count
+    decision_matrix = {
+        (5, 6): {2: 'H', 3: 'H', 4: 'H', 5: 'H', 6: 'H', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'J': 'H', 'Q': 'H', 'K': 'H', 'A': 'H'},
+        (7, 8, 9): {2: 'H', 3: 'H', 4: 'H', 5: 'Dh', 6: 'Dh', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'J': 'H', 'Q': 'H', 'K': 'H', 'A': 'H'},
+        (10, 11): {2: 'Dh', 3: 'Dh', 4: 'Dh', 5: 'Dh', 6: 'Dh', 7: 'Dh', 8: 'Dh', 9: 'Dh', 10: 'H', 'J': 'H', 'Q': 'H', 'K': 'H', 'A': 'H'},
+        (12): {2: 'H', 3: 'H', 4: 'S', 5: 'S', 6: 'S', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'J': 'H', 'Q': 'H', 'K': 'H', 'A': 'H'},
+        (13, 14, 15, 16): {2: 'S', 3: 'S', 4: 'S', 5: 'S', 6: 'S', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'J': 'H', 'Q': 'H', 'K': 'H', 'A': 'H'},
+        (17, 18, 19, 20, 21): {2: 'S', 3: 'S', 4: 'S', 5: 'S', 6: 'S', 7: 'S', 8: 'S', 9: 'S', 10: 'S', 'J': 'S', 'Q': 'S', 'K': 'S', 'A': 'S'}
+    }
+    # Determine the optimal move based on the game state and current count
+    if len(player_hand) == 2 and player_hand[0] == player_hand[1]:
+        player_hand = [player_hand[0], hi_lo_count(player_hand[0])]
+    player_sum = sum([hi_lo_count(card) for card in player_hand])
+    if player_sum in decision_matrix:
+	
+	
